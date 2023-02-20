@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+
+<div id=ui>
+<select id=sellang><option value="ja">日本語</option><option value="en">English</option></select><br>
+<button id=btn>スタート</button><br>
+<button id=btnfull>最大化</button><br>
+</div>
+<div id=divtext>字幕表示ARアプリ用「jimaku」音声認識WebAPIを使用してマイクからの入力をテキスト化します。クラウドに送信する実装が多いようなのでご留意の上ご利用ください。</div>
+
+<style>
+body {
+  background-color: black;
+}
+#ui {
+  position: fixed;
+  top: .5em;
+  right: .5em;
+  text-align: right;
+}
+button {
+  font-size: 120%;
+  padding: .2em;
+  margin: .2em 0;
+  background-color: #aaa;
+  width: 5em;
+}
+#sellang {
+  font-size: 120%;
+  padding: .2em;
+  margin: .2em 0;
+  background-color: #aaa;
+  width: 5em;
+}
+#divtext {
+  position: fixed;
+  bottom: .5em;
+  font-size: 2.5vw;
+  color: white;
+}
+</style>
+
+<script type="module">
+import { SpeechRecognizer } from "./SpeechRecognizer.js";
+
+let recog = null;
+btn.onclick = async () => {
+  if (btn.textContent != "スタート") {
+    btn.textContent = "スタート";
+    recog.stop();
+    recog = null;
+    return;
+  }
+  btn.textContent = "ストップ";
+  recog = new SpeechRecognizer(sellang.value);
+  console.log(recog);
+  let bktext = "";
+  recog.start((e) => {
+    console.log(e);
+    const res = e.results;
+    const r = res[res.length - 1];
+    const tscr = r[0].transcript;
+    if (!r.isFinal) {
+      divtext.innerHTML = bktext + "<br>" + tscr;
+    } else {
+      divtext.textContent = tscr;
+      bktext = tscr;
+      /*
+      recog.stop();
+      divai.textContent = "thinking...";
+      const res = await fetchChat(tscr);
+      divai.textContent = res;
+      await speech(res, false);
+      recog = startRecog(onresult);
+      */
+    }
+  });
+};
+btnfull.onclick = () => {
+  document.body.requestFullscreen();
+};
+addEventListener('fullscreenchange', e => {
+  btnfull.style.display = document.fullscreenElement ? "none" : "block";
+});
+</script>
+
