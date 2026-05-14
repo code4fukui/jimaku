@@ -4,7 +4,7 @@ Web Speech APIを使用したリアルタイム音声認識Webアプリケーシ
 
 ## デモ
 
-**https://code4fukui.github.io/jimaku/**
+**https://github.com/code4fukui/jimaku
 
 ## 機能
 

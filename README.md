@@ -6,7 +6,7 @@ A web application that uses the Web Speech API for real-time speech recognition,
 
 ## Demo
 
-**https://code4fukui.github.io/jimaku/**
+**https://github.com/code4fukui/jimaku
 
 ## Features
 
